@@ -62,27 +62,24 @@ export class AmplifyTicketManagementComponent {
   }
 
   loadTicket() {
-    this.client.models.Ticket.list().then((tickets:any) => {
-      console.log(tickets);
-    });
-    // try {
-    //   this.loading = true;
-    //   this.client.models.Ticket.observeQuery().subscribe({
-    //     next: (items: any) => {
-    //       const allTickets: any = items;
-    //       this.statuses.forEach((status) => {
-    //         this.tickets[status] = allTickets.filter(
-    //           (ticket: { status: string }) => ticket.status === status
-    //         );
-    //       });
-    //       this.loading = false;
-    //       console.log(this.tickets);
-    //     },
-    //   });
-    // } catch (error) {
-    //   this.loading = false;
-    //   console.error('error fetching tickets', error);
-    // }
+    try {
+      this.loading = true;
+      this.client.models.Ticket.observeQuery().subscribe({
+        next: (res: any) => {
+          const allTickets: any[] = res.items;
+          this.statuses.forEach((status) => {
+            this.tickets[status] = allTickets.filter(
+              (ticket: { status: string }) => ticket.status === status
+            );
+          });
+          this.loading = false;
+          console.log(this.tickets);
+        },
+      });
+    } catch (error) {
+      this.loading = false;
+      console.error('error fetching tickets', error);
+    }
   }
 
   saveTicket(): void {
