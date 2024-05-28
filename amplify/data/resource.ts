@@ -12,7 +12,7 @@ const schema = a.schema({
       content: a.string(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
-    Ticket: a
+  Ticket: a
     .model({
       title: a.string(),
       description: a.string(),

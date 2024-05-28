@@ -43,10 +43,10 @@ export class TicketManagementComponent {
 
   constructor(private ticketService: TicketService) {}
   ngOnInit(): void {
-    this.loadTickets();
+    this.listTickets();
   }
 
-  loadTickets(): void {
+  listTickets(): void {
     const allTickets = this.ticketService.getTickets();
     this.statuses.forEach((status) => {
       this.tickets[status] = allTickets.filter(
@@ -66,7 +66,7 @@ export class TicketManagementComponent {
       // this.createTickets();
     }
     this.resetForm();
-    this.loadTickets();
+    this.listTickets();
   }
 
   editTicket(ticket: Ticket): void {
@@ -76,7 +76,7 @@ export class TicketManagementComponent {
 
   deleteTicket(id: any): void {
     this.ticketService.deleteTicket(id);
-    this.loadTickets();
+    this.listTickets();
   }
 
   resetForm(): void {
